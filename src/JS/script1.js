@@ -4,20 +4,23 @@ $(document).ready(function () {
     $("#income_detail").hide();
     fillIncome();
     filltxns();
-    if($("#total_expense").val()>0){
+    // show expences
+    if ($("#total_expense").val() > 0) {
         $("#record_table").show();
-    }else{
+    } else {
         $("#record_table").hide();
     }
     $("#exp").click(function () {
         $("#income_detail").hide();
         $("#expense_detail").show();
     })
+    //show income
     $("#inc").click(function () {
         $("#income_detail").show();
         $(".update_inc").hide();
         $("#expense_detail").hide();
     })
+    //adding expences
     $("#expense_add").click(function () {
         let value = $("#expense_amt").val();
         let type = $("#expense_type").val();
@@ -32,12 +35,12 @@ $(document).ready(function () {
                 fillIncome();
                 filltxns();
                 $("#record_table").show();
-                console.log(value);
             })
         } else {
             $(".msg").text("Value must be greater than zero").css("color", "red");
         }
     })
+    //adding income
     $("#income_add").click(function () {
         let value = $("#income_amt").val();
         let type = "income";
@@ -51,13 +54,13 @@ $(document).ready(function () {
             }).done(function (value) {
                 fillIncome();
                 filltxns();
-                console.log(value);
             })
         } else {
             $(".msg").text("Value must be greater than zero").css("color", "red");
         }
     })
 })
+// filling income detail
 function fillIncome() {
     $.ajax({
         url: 'totalIncome.php',
@@ -70,12 +73,13 @@ function fillIncome() {
         async: false,
     }).done(function (result) {
         console.log(result);
-        let arr=result.split("/");
-      $("#total_expense").val(arr[0]);
-      $(".tbody").html("<tr><td>"+arr[1]+"</td><td>"+arr[2]+"</td><td>"+arr[3]+"</td><td>"+arr[4]+"</td></tr>");
+        let arr = result.split("/");
+        $("#total_expense").val(arr[0]);
+        $(".tbody").html("<tr><td>" + arr[1] + "</td><td>" + arr[2] + "</td><td>" + arr[3] + "</td><td>" + arr[4] + "</td></tr>");
     })
     $("#remaining").val($("#total_income").val() - $("#total_expense").val());
 }
+// displaying txns
 function filltxns() {
     $.ajax({
         url: 'txns.php',
@@ -84,6 +88,7 @@ function filltxns() {
         $("#txns").html(value);
     })
 }
+// delete data
 function deleteData(value) {
     //console.log(value.id);
     let id = value.id;
@@ -97,7 +102,7 @@ function deleteData(value) {
         fillIncome();
     })
 }
-
+//edit data
 function editData(value) {
     $.ajax({
         url: "edit.php",
@@ -125,6 +130,7 @@ function editData(value) {
         }
     });
 }
+// updation
 $("#update").click(function () {
     let amt, type;
     if (update_type == "income") {

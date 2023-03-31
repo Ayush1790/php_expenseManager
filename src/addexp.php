@@ -1,6 +1,6 @@
 <?php
 session_start();
-// session_unset();
+// setting the values of session
 if(!isset($_SESSION['expences'])){
     $_SESSION['expences']=array();
     $_SESSION['totalinc']=0;
@@ -13,11 +13,10 @@ if(!isset($_SESSION['expences'])){
 }
 $data=$_POST['key'];
 $token=explode("/",$data);
+// code for adding expences
 array_push($_SESSION['expences'],$token[1]."=>".$token[0]);
 if($token[1]=="income"){
     $_SESSION['totalinc']+=$token[0];
 }else{
     $_SESSION['totalexp']+=$token[0];
 }
-print_r($_SESSION['expences']);
-?>
