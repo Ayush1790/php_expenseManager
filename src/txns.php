@@ -10,7 +10,6 @@ if (isset($_SESSION['expences'])) {
     $_SESSION['Travelling'] = 0;
     $_SESSION['Miscellaneous'] = 0;
     foreach ($_SESSION['expences'] as $key => $value) {
-        // echo "$value";
         $str .= "<li> $value<button onclick=editData(this) id=$index>Edit</button><button onclick=deleteData(this) id=$index>Delete</button></li><hr>";
         $index++;
     }

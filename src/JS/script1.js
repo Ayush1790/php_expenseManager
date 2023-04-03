@@ -1,6 +1,6 @@
+let update_type = "";
 $(document).ready(function () {
-    let update_type = "";
-    $("#update").hide();
+    $(".update").hide();
     $("#income_detail").hide();
     fillIncome();
     filltxns();
@@ -72,7 +72,6 @@ function fillIncome() {
         url: 'totalExpence.php',
         async: false,
     }).done(function (result) {
-        console.log(result);
         let arr = result.split("/");
         $("#total_expense").val(arr[0]);
         $(".tbody").html("<tr><td>" + arr[1] + "</td><td>" + arr[2] + "</td><td>" + arr[3] + "</td><td>" + arr[4] + "</td></tr>");
@@ -90,14 +89,12 @@ function filltxns() {
 }
 // delete data
 function deleteData(value) {
-    //console.log(value.id);
     let id = value.id;
     $.ajax({
         url: 'remove.php',
         type: 'post',
         data: 'key=' + id,
     }).done(function (value) {
-        console.log(value);
         filltxns();
         fillIncome();
     })
@@ -110,9 +107,9 @@ function editData(value) {
         data: "key=" + value.id,
         datatype: "text",
     }).done(function (value) {
-        $("#update").show();
+        $(".update").show();
         let arr = value.split("=>");
-        update_type = arr[0];
+        window.update_type = arr[0];
         if (arr[0] == "income") {
             $("#income_add").hide();
             $("#income_detail").show();
@@ -120,7 +117,6 @@ function editData(value) {
             $(".update_inc").show();
             $("#income_amt").val(arr[1]);
         } else {
-            console.log("expense");
             $("#expense_add").hide();
             $("#income_detail").hide();
             $("#expense_detail").show();
@@ -131,9 +127,9 @@ function editData(value) {
     });
 }
 // updation
-$("#update").click(function () {
+$(".update").click(function () {
     let amt, type;
-    if (update_type == "income") {
+    if (window.update_type == 'income') {
         amt = $("#income_amt").val();
         type = "income";
     } else {
@@ -148,9 +144,21 @@ $("#update").click(function () {
             data: "key=" + type + "=>" + amt,
             datatype: 'text'
         }).done(function (value) {
-            console.log(value);
+            if (value == "income") {
+                $("#income_add").show();
+                $("#income_detail").show();
+                $("#expense_detail").hide();
+                $("#update_inc").hide();
+                $("#income_amt").val("");
+            } else {
+                $("#expense_add").show();
+                $("#income_detail").hide();
+                $("#expense_detail").show();
+                $("#update_exp").hide();
+            }
             filltxns();
             fillIncome();
+
         })
     } else {
         $(".msg").text("Value must be greater than zero").css("color", "red");

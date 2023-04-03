@@ -34,7 +34,7 @@
         <option value="Miscellaneous">Miscellaneous</option>
       </select>
       <input type="button" value="Add" id="expense_add" />
-      <input type="button" value="Update" id="update" /><br />
+      <input type="button" value="Update" id="update_exp" class="update"/><br />
       <span class="msg"></span>
       <hr />
     </article>
@@ -43,7 +43,7 @@
       <hr />
       <input type="number" placeholder="Enter Income" id="income_amt" />
       <input type="button" value="Add" id="income_add" />
-      <input type="button" value="Update" id="update" class="update_inc" />
+      <input type="button" value="Update" id="update_inc" class="update" />
       <br />
       <span class="msg"></span>
       <hr />
